@@ -1,0 +1,94 @@
+﻿@model IEnumerable<OnlineEventsManagementSystemMVC.Models.Ticket>
+
+@{
+    ViewBag.Title = "My Tickets";
+    Layout = "~/Views/Shared/_LayoutUserPanel.cshtml";
+}
+
+<!-- Custom Garba Theme Styles -->
+<style>
+    body {
+        background-color: #fff8e1; /* Soft yellow background */
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .garba-header {
+        background-color: #ff5722; /* Bright orange for header */
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+        font-size: 2.5rem;
+        border-radius: 10px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .garba-table {
+        background-color: #fff; /* White background for table */
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        margin-top: 20px;
+    }
+
+        .garba-table th {
+            background-color: #673ab7; /* Deep purple for table header */
+            color: #fff !important;
+            font-size: 1.2rem;
+            padding: 12px;
+            font-weight: bold;
+        }
+
+        .garba-table td {
+            background-color: #ffecb3; /* Soft yellow for cells */
+            color: #000 !important; /* Black text for readability */
+            font-size: 1.1rem;
+            padding: 12px;
+            font-weight: bold;
+        }
+
+        .garba-table tr:nth-child(even) {
+            background-color: #ffe0b2; /* Light orange for alternate rows */
+        }
+
+    .no-events-message {
+        color: #f44336; /* Bright red for no tickets message */
+        font-size: 1.3rem;
+        font-weight: bold;
+        text-align: center;
+        padding: 15px;
+    }
+</style>
+
+<div class="container my-5">
+    <h1 class="garba-header">My Tickets</h1>
+
+    @if (Model.Any())
+    {
+        <table class="table table-bordered table-hover garba-table">
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Location</th>
+                    <th>Event Date</th>
+                    <th>Purchase Date</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var ticket in Model)
+                {
+                    <tr>
+                        <td>@ticket.TblEvent.EventName</td>
+                        <td>@ticket.TblEvent.Location</td>
+                        <td>@ticket.TblEvent.EventDate.ToString("yyyy-MM-dd")</td>
+                        <td>@ticket.PurchaseDate.ToString("yyyy-MM-dd")</td>
+                        <td>@ticket.TblEvent.Price</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p class="no-events-message">You have not purchased any tickets yet.</p>
+    }
+</div>

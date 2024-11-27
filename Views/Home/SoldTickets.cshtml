@@ -1,0 +1,90 @@
+﻿@model IEnumerable<OnlineEventsManagementSystemMVC.Models.AdminTicketSalesViewModel>
+
+@{
+    ViewBag.Title = "Tickets Sold for Events";
+    Layout = "~/Views/Shared/_LayoutUserPanel.cshtml"; // Specify your layout path
+}
+
+<!-- Custom Garba Theme Styles -->
+<style>
+    body {
+        background-color: #fff8e1; /* Light yellow background */
+        font-family: 'Poppins', sans-serif;
+    }
+    .garba-header {
+        background-color: #ff5722; /* Bright orange for header */
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+        font-size: 2.5rem;
+        border-radius: 10px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+    .garba-table {
+        background-color: #fff; /* White background for table */
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+        .garba-table th {
+            background-color: #673ab7; /* Deep purple for table header */
+            color: #fff !important;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            padding: 12px;
+            font-weight: bold;
+        }
+    .garba-table td {
+        background-color: #ffecb3; /* Soft yellow for cells */
+        color: #000 !important; /* Ensures text is black */
+        font-size: 1.1rem;
+        padding: 12px;
+        font-weight: bold; /* Make text bold */
+    }
+    .garba-table tr:nth-child(even) {
+        background-color: #ffe0b2; /* Light orange for alternate rows */
+    }
+    .no-tickets-message {
+        color: #f44336; /* Bright red for no tickets message */
+        font-size: 1.3rem;
+        font-weight: bold;
+        text-align: center;
+        padding: 15px;
+    }
+</style>
+
+<div class="container my-5">
+    <h1 class="garba-header">Tickets Sold for Events</h1>
+
+    <table class="table table-bordered garba-table">
+        <thead>
+            <tr>
+                <th>Event Name</th>
+                <th>Location</th>
+                <th>Event Date</th>
+                <th>Price</th>
+                <th>Tickets Sold</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!Model.Any()) // Check if there are any records
+            {
+                <tr>
+                    <td colspan="5" class="no-tickets-message">No tickets sold for events created by this admin.</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.EventName</td>
+                        <td>@item.Location</td>
+                        <td>@item.EventDate.ToString("yyyy-MM-dd")</td>
+                        <td>@item.Price.ToString("C")</td>
+                        <td>@item.TicketsSold</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

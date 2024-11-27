@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EventsDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Admins">
+          <Key>
+            <PropertyRef Name="AdminId" />
+          </Key>
+          <Property Name="AdminId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AdminName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'C:\USERS\MAYUR\DOWNLOADS\ONLINEEVENTSMANAGEMENTSYSTEMMVC\ONLINEEVENTSMANAGEMENTSYSTEMMVC\APP_DATA\EVENTSDATA.MDF.dbo.AdminTbl' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AdminTbl">
+          <Key>
+            <PropertyRef Name="adminId" />
+            <PropertyRef Name="adminName" />
+            <PropertyRef Name="password" />
+          </Key>
+          <Property Name="adminId" Type="int" Nullable="false" />
+          <Property Name="adminName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'C:\USERS\MAYUR\DOWNLOADS\ONLINEEVENTSMANAGEMENTSYSTEMMVC\ONLINEEVENTSMANAGEMENTSYSTEMMVC\APP_DATA\EVENTSDATA.MDF.dbo.TblContact' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TblContact">
+          <Key>
+            <PropertyRef Name="name" />
+            <PropertyRef Name="phone" />
+            <PropertyRef Name="subject" />
+            <PropertyRef Name="message" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="phone" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="subject" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="message" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TblEvent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EventName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Location" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="EventDate" Type="datetime" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TblRegister">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="userName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="phone" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="address" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tickets">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EventId" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PurchaseDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Tickets__EventId__4F47C5E3">
+          <End Role="TblEvent" Type="Self.TblEvent" Multiplicity="1" />
+          <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TblEvent">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tickets">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EventsDataModelStoreContainer">
+          <EntitySet Name="Admins" EntityType="Self.Admins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblEvent" EntityType="Self.TblEvent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblRegister" EntityType="Self.TblRegister" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tickets" EntityType="Self.Tickets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AdminTbl" EntityType="Self.AdminTbl" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[AdminTbl].[adminId] AS [adminId], 
+[AdminTbl].[adminName] AS [adminName], 
+[AdminTbl].[password] AS [password]
+FROM [dbo].[AdminTbl] AS [AdminTbl]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TblContact" EntityType="Self.TblContact" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[TblContact].[name] AS [name], 
+[TblContact].[phone] AS [phone], 
+[TblContact].[subject] AS [subject], 
+[TblContact].[message] AS [message]
+FROM [dbo].[TblContact] AS [TblContact]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Tickets__EventId__4F47C5E3" Association="Self.FK__Tickets__EventId__4F47C5E3">
+            <End Role="TblEvent" EntitySet="TblEvent" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EventsDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AdminTbl">
+          <Key>
+            <PropertyRef Name="adminId" />
+            <PropertyRef Name="adminName" />
+            <PropertyRef Name="password" />
+          </Key>
+          <Property Name="adminId" Type="Int32" Nullable="false" />
+          <Property Name="adminName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TblContact">
+          <Key>
+            <PropertyRef Name="name" />
+            <PropertyRef Name="phone" />
+            <PropertyRef Name="subject" />
+            <PropertyRef Name="message" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="phone" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="subject" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="message" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="EventsDataEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AdminTbls" EntityType="Self.AdminTbl" />
+          <EntitySet Name="TblContacts" EntityType="Self.TblContact" />
+          <EntitySet Name="TblRegisters" EntityType="EventsDataModel.TblRegister" />
+          <EntitySet Name="Admins" EntityType="EventsDataModel.Admin" />
+          <EntitySet Name="Tickets" EntityType="EventsDataModel.Ticket" />
+          <EntitySet Name="TblEvents" EntityType="EventsDataModel.TblEvent" />
+          <AssociationSet Name="FK__Tickets__EventId__4F47C5E3" Association="EventsDataModel.FK__Tickets__EventId__4F47C5E3">
+            <End Role="TblEvent" EntitySet="TblEvents" />
+            <End Role="Ticket" EntitySet="Tickets" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="TblRegister">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="userName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="AdminId" />
+          </Key>
+          <Property Name="AdminId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AdminName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventId" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PurchaseDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="TblEvent" Relationship="EventsDataModel.FK__Tickets__EventId__4F47C5E3" FromRole="Ticket" ToRole="TblEvent" />
+        </EntityType>
+        <EntityType Name="TblEvent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Location" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EventDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tickets" Relationship="EventsDataModel.FK__Tickets__EventId__4F47C5E3" FromRole="TblEvent" ToRole="Ticket" />
+        </EntityType>
+        <Association Name="FK__Tickets__EventId__4F47C5E3">
+          <End Type="EventsDataModel.TblEvent" Role="TblEvent" Multiplicity="1" />
+          <End Type="EventsDataModel.Ticket" Role="Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TblEvent">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EventsDataModelStoreContainer" CdmEntityContainer="EventsDataEntities1">
+          <EntitySetMapping Name="AdminTbls">
+            <EntityTypeMapping TypeName="EventsDataModel.AdminTbl">
+              <MappingFragment StoreEntitySet="AdminTbl">
+                <ScalarProperty Name="adminId" ColumnName="adminId" />
+                <ScalarProperty Name="adminName" ColumnName="adminName" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblContacts">
+            <EntityTypeMapping TypeName="EventsDataModel.TblContact">
+              <MappingFragment StoreEntitySet="TblContact">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="subject" ColumnName="subject" />
+                <ScalarProperty Name="message" ColumnName="message" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblRegisters">
+            <EntityTypeMapping TypeName="EventsDataModel.TblRegister">
+              <MappingFragment StoreEntitySet="TblRegister">
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Admins">
+            <EntityTypeMapping TypeName="EventsDataModel.Admin">
+              <MappingFragment StoreEntitySet="Admins">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="AdminName" ColumnName="AdminName" />
+                <ScalarProperty Name="AdminId" ColumnName="AdminId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tickets">
+            <EntityTypeMapping TypeName="EventsDataModel.Ticket">
+              <MappingFragment StoreEntitySet="Tickets">
+                <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblEvents">
+            <EntityTypeMapping TypeName="EventsDataModel.TblEvent">
+              <MappingFragment StoreEntitySet="TblEvent">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="EventDate" ColumnName="EventDate" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="EventName" ColumnName="EventName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

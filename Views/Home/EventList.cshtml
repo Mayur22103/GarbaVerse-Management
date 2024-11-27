@@ -1,0 +1,112 @@
+﻿@model IEnumerable<OnlineEventsManagementSystemMVC.Models.TblEvent>
+
+@{
+    ViewBag.Title = "Event List";
+    Layout = "~/Views/Shared/_LayoutUserPanel.cshtml"; // Ensure this layout file includes Bootstrap
+}
+
+<style>
+    body {
+        background-color: #fff3e6; /* Light background for a festive feel */
+    }
+
+    .header {
+        margin-bottom: 40px; /* Space below the header */
+    }
+
+    .card {
+        border: none; /* No border for a clean look */
+        border-radius: 15px; /* Rounded corners */
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        transition: transform 0.2s; /* Smooth scaling effect */
+        margin-bottom: 30px; /* Space between cards */
+        height: 100%; /* Ensure all cards have equal height */
+    }
+
+        .card:hover {
+            transform: translateY(-5px); /* Lift effect on hover */
+        }
+
+    .card-header {
+        background: linear-gradient(135deg, #ffcc00, #ff6600); /* Diwali-themed gradient */
+        color: #fff; /* White text for contrast */
+        border-radius: 15px 15px 0 0; /* Rounded corners at the top */
+        padding: 15px; /* Padding for header */
+    }
+
+    .card-title {
+        font-weight: bold; /* Bold title */
+        font-size: 2rem; /* Increased font size for the event name */
+        text-align: center; /* Center align title */
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Shadow for added depth */
+        margin-bottom: 10px; /* Space below the title */
+    }
+
+    .card-body {
+        padding: 20px; /* Increased padding for card body */
+        margin: 10px; /* Margin for spacing between card body and header */
+    }
+
+    .card-text {
+        color: #333; /* Dark color for text */
+        text-align: left; /* Left-align text */
+        font-size: 1.2rem; /* Increased font size for body text */
+    }
+
+    .card-subtitle {
+        color: #ff5722; /* Bright orange for the location */
+        font-weight: bold; /* Bold for emphasis */
+        font-size: 1.5rem; /* Increased font size for location */
+    }
+
+    .buy-button {
+        background-color: #4caf50; /* Bright green button */
+        color: white;
+        border-radius: 20px; /* Rounded button */
+        font-weight: bold; /* Bold button text */
+        padding: 10px 20px; /* Padding for button */
+        border: none; /* Remove border */
+        transition: background-color 0.3s; /* Smooth color transition */
+        width: 100%; /* Full width */
+    }
+
+        .buy-button:hover {
+            background-color: #388e3c; /* Darker green on hover */
+        }
+</style>
+
+<div class="container">
+    <h1 class="text-center text-primary mb-4 font-weight-bold header">Event List</h1>
+
+    @if (Model.Any())
+    {
+        <div class="row">
+            @foreach (var evt in Model)
+            {
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">@evt.EventName</h5>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="card-subtitle mb-2">@evt.Location</h6>
+                            <p class="card-text">
+                                <strong>Date:</strong> @evt.EventDate.ToString("yyyy-MM-dd")<br>
+                                <strong>Description:</strong> @evt.Description<br>
+                                <strong>Price:</strong> @evt.Price
+                            </p>
+                        </div>
+                        <div class="card-footer text-center">
+                            @Html.ActionLink("Buy Ticket", "BuyTicket", "Home", new { id = evt.Id }, new { @class = "btn buy-button" })
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p class="text-center text-danger font-weight-bold">No events found.</p>
+    }
+</div>
+

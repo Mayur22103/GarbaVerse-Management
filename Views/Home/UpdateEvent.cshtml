@@ -1,0 +1,119 @@
+﻿@model IEnumerable<OnlineEventsManagementSystemMVC.Models.TblEvent>
+
+@{
+    ViewBag.Title = "Event List";
+    Layout = "~/Views/Shared/_LayoutUserPanel.cshtml"; // Ensure this layout file includes Bootstrap
+}
+
+<!-- Custom Garba Theme Styles -->
+<style>
+    body {
+        background-color: #fff8e1; /* Soft yellow background */
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .garba-header {
+        background-color: #ff5722; /* Bright orange for header */
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+        font-size: 2.5rem;
+        border-radius: 10px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .garba-table {
+        background-color: #fff; /* White background for table */
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        margin-top: 20px;
+    }
+
+        .garba-table th {
+            background-color: #673ab7; /* Deep purple for table header */
+            color: #fff !important;
+            font-size: 1.2rem;
+            padding: 12px;
+            font-weight: bold;
+        }
+
+        .garba-table td {
+            background-color: #ffecb3; /* Soft yellow for cells */
+            color: #000 !important; /* Black text for readability */
+            font-size: 1.1rem;
+            padding: 12px;
+            font-weight: bold;
+        }
+
+        .garba-table tr:nth-child(even) {
+            background-color: #ffe0b2; /* Light orange for alternate rows */
+        }
+
+    .btn-primary {
+        background-color: #673ab7 !important; /* Deep purple for update button */
+        border-color: #673ab7 !important;
+    }
+
+    .btn-danger {
+        background-color: #f44336 !important; /* Red for delete button */
+        border-color: #f44336 !important;
+    }
+
+    .no-events-message {
+        color: #f44336; /* Bright red for no events message */
+        font-size: 1.3rem;
+        font-weight: bold;
+        text-align: center;
+        padding: 15px;
+    }
+</style>
+
+<div class="container my-5">
+    <h1 class="garba-header">Event List</h1>
+
+    @if (Model.Any())
+    {
+        <table class="table table-bordered table-hover garba-table">
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Location</th>
+                    <th>Event Date</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Actions</th> <!-- Actions Header -->
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var evt in Model)
+                {
+                    <tr>
+                        <td>@evt.EventName</td>
+                        <td>@evt.Location</td>
+                        <td>@evt.EventDate.ToString("yyyy-MM-dd")</td>
+                        <td>@evt.Description</td>
+                        <td>@evt.Price</td>
+                        <td>
+                            <!-- Update Button -->
+                            <a href="@Url.Action("UpdateEventData", "Home", new { id = evt.Id })" class="btn btn-primary btn-sm">Update</a>
+                            <!-- Delete Button -->
+                            <button class="btn btn-danger btn-sm" onclick="confirmDelete(@evt.Id)">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p class="no-events-message">No events found.</p>
+    }
+</div>
+
+<script>
+    function confirmDelete(eventId) {
+        if (confirm("Are you sure you want to delete this event?")) {
+            window.location.href = '@Url.Action("DeleteEvent", "Home")/' + eventId;
+        }
+    }
+</script>

@@ -1,0 +1,86 @@
+﻿@{
+    ViewBag.Title = "Add Event";
+    Layout = "~/Views/Shared/_LayoutUserPanel.cshtml";
+}
+
+<center style="background-color:darkslategrey">
+    <br /><br /><br /><br /><br /><br />
+
+    @using (Html.BeginForm("AddEventData", "Home", FormMethod.Post))
+    {
+        <table style="width: 448px; height: 480px; background-color:cadetblue; font-size: large; font-weight: bold;">
+            <th colspan="2" style="text-align:center"><h1>Add Event</h1></th>
+
+            <tr>
+                <td align="center">Event Name</td>
+                <td align="center">
+                    @Html.TextBox("EventName", null, new
+                    {
+                        @class = "form-control",
+                        style = "width: 200px;",
+                        required = "required" // Added required attribute
+                    })
+                </td>
+            </tr>
+
+            <tr>
+                <td align="center">Location</td>
+                <td align="center">
+                    @Html.TextBox("Location", null, new
+                    {
+                        @class = "form-control",
+                        style = "width: 200px;",
+                        required = "required" // Added required attribute
+                    })
+                </td>
+            </tr>
+
+            <tr>
+                <td align="center">Event Date</td>
+                <td align="center">
+                    @Html.TextBox("EventDate", null, new
+                    {
+                        @class = "form-control",
+                        type = "date",
+                        style = "width: 200px;",
+                        required = "required" // Added required attribute
+                    })
+                </td>
+            </tr>
+
+            <tr>
+                <td align="center">Description</td>
+                <td align="center">
+                    @Html.TextArea("Description", null, new
+                    {
+                        @class = "form-control",
+                        style = "width: 200px;",
+                        required = "required" // Added required attribute
+                    })
+                </td>
+            </tr>
+
+            <tr>
+                <td align="center">Price</td>
+                <td align="center">
+                    @Html.TextBox("Price", null, new
+                    {
+                        @class = "form-control",
+                        type = "number", // Type set to number
+                        step = "0.01", // Allow decimal input
+                        style = "width: 200px;",
+                        required = "required" // Added required attribute
+                    })
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" value="Add Event" class="btn badge-success btnOrder" />
+                </td>
+            </tr>
+        </table>
+    }
+
+    <br /><br /><br /><br /><br /><br />
+</center>

@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutUserPanel.cshtml";
+}
+
+<div id="login-section">
+
+    <center style="background-color:blanchedalmond">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="alert alert-danger" style="text-align: center;">
+                @ViewBag.ErrorMessage
+            </div>
+        }
+
+        @using (Html.BeginForm("chkLogin", "Home", FormMethod.Post))
+        {
+            <table style="width: 433px; height: 370px; background-color: burlywood; font-size: large; font-weight: bold;">
+                <tr>
+                    <th colspan="2" style="text-align:center"><h1>Sign In</h1></th>
+                </tr>
+                <tr>
+                    <td align="center">Username</td>
+                    <td align="center">
+                        @Html.TextBox("userName", null, new
+                        {
+                            @class = "form-control",
+                            style = "width: 200px;",
+                            required = "required"
+                        })
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="height: 72px" align="center">Password</td>
+                    <td style="height: 72px" align="center">
+                        @Html.Password("password", null, new
+                        {
+                            @class = "form-control",
+                            style = "width: 200px;",
+                            required = "required"
+                        })
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" align="center">
+                        <label>
+                            <input type="radio" name="role" value="User" checked="checked" /> User
+                        </label>
+                        <label>
+                            <input type="radio" name="role" value="Admin" /> Admin
+                        </label>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" value="Login" name="Login" class="btn btn-success btnOrder" />
+                    </td>
+                </tr>
+            </table>
+        }
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+    </center>
+
+
+</div>

@@ -1,0 +1,113 @@
+﻿@model OnlineEventsManagementSystemMVC.Models.TblEvent
+
+@{
+    ViewBag.Title = "Buy Ticket";
+    // Layout is removed as per your request
+}
+
+<style>
+    body {
+        background-color: #fffae6; /* Soft, warm background color */
+        font-family: 'Arial', sans-serif; /* Clean font */
+    }
+
+    .container {
+        background-color: #ffffff; /* White background for the content */
+        border-radius: 12px; /* Rounded corners */
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Deeper shadow for a floating effect */
+        padding: 40px; /* Increased padding */
+        margin-top: 50px; /* Margin from the top of the page */
+    }
+
+    h1 {
+        color: #c77d00; /* Warm gold color for the title */
+        font-size: 2.5rem; /* Larger title */
+        margin-bottom: 20px; /* Space below the title */
+        text-align: center; /* Center align title */
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    }
+
+    h3 {
+        color: #4a4a4a; /* Darker color for subheading */
+        margin-top: 30px; /* Space above subheading */
+        text-align: center; /* Center align subheading */
+    }
+
+    .btn-success {
+        background-color: #8bc34a; /* Green button */
+        border: none; /* Remove border */
+        padding: 10px 20px; /* Increased button padding */
+        font-size: 1.2rem; /* Larger button text */
+        border-radius: 25px; /* Rounded button */
+        transition: background-color 0.3s, transform 0.3s; /* Smooth background transition */
+        position: relative; /* Position for animation */
+    }
+
+        .btn-success:hover {
+            background-color: #6fbf3a; /* Darker green on hover */
+            transform: scale(1.05); /* Slightly increase size on hover */
+        }
+
+    .info-box {
+        background-color: #ffecb3; /* Light yellow background for info box */
+        border-left: 5px solid #ff9800; /* Bright orange left border */
+        padding: 15px; /* Padding inside the info box */
+        margin-bottom: 20px; /* Space below info box */
+        border-radius: 5px; /* Rounded corners */
+        font-size: 1.1rem; /* Slightly larger text */
+        color: #333; /* Dark text color for readability */
+    }
+
+    /* Decorative element for a festive feel */
+    .decorative-border {
+        border: 2px dashed #ff5722; /* Dashed border */
+        padding: 10px; /* Padding inside border */
+        margin-top: 20px; /* Margin above decorative element */
+        margin-bottom: 20px; /* Margin below decorative element */
+        border-radius: 8px; /* Rounded corners for decorative border */
+        text-align: center; /* Center text */
+        font-weight: bold; /* Bold text */
+        color: #ff5722; /* Warm orange color */
+        background: rgba(255, 255, 255, 0.8); /* Semi-transparent background for a layered look */
+    }
+
+    /* Animation for button */
+    .btn-success::after {
+        content: '✨'; /* Decorative icon */
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        transition: transform 0.5s ease;
+    }
+
+    .btn-success:hover::after {
+        transform: translate(-50%, -50%) scale(1.5); /* Scale up the icon */
+    }
+</style>
+
+<div class="container">
+    <h1>Buy Ticket for @Model.EventName</h1>
+
+    <div class="info-box">
+        <p><strong>Location:</strong> @Model.Location</p>
+        <p><strong>Event Date:</strong> @Model.EventDate.ToString("yyyy-MM-dd")</p>
+        <p><strong>Description:</strong> @Model.Description</p>
+        <p><strong>Price:</strong> @Model.Price.ToString("C")</p>
+    </div>
+
+    <div class="decorative-border">
+        ✨ Wishing you joy and happiness! ✨
+    </div>
+
+    <h3>Confirm Purchase</h3>
+
+    @using (Html.BeginForm("ConfirmPurchase", "Home", FormMethod.Post))
+    {
+        @Html.Hidden("id", Model.Id) <!-- Hidden field for the event ID -->
+        <div class="text-center">
+            <input type="submit" value="Confirm Purchase" class="btn btn-success btn-lg" />
+        </div>
+    }
+</div>
+

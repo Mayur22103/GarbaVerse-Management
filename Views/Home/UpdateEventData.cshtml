@@ -1,0 +1,128 @@
+﻿@model OnlineEventsManagementSystemMVC.Models.TblEvent
+
+@{
+    ViewBag.Title = "Update Event";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Custom Garba Theme Styles -->
+    <style>
+        body {
+            background-color: #fff3e0; /* Soft warm background for Garba theme */
+            font-family: 'Poppins', sans-serif; /* Clean, modern font */
+        }
+
+        .container {
+            margin-top: 50px;
+            margin-bottom: 50px;
+            border-radius: 12px;
+            padding: 40px;
+            background-color: #fff8e1; /* Warm yellow background */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Soft shadow */
+        }
+
+        .garba-header {
+            text-align: center;
+            color: #e91e63; /* Festive pink */
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            background-color: #ff7043; /* Vibrant orange */
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-label {
+            font-weight: bold;
+            color: #6a1b9a; /* Deep purple */
+        }
+
+        .form-control {
+            border-radius: 8px;
+            border: 2px solid #673ab7; /* Purple border */
+        }
+
+        .btn-success {
+            background-color: #43a047 !important; /* Bright green */
+            border-color: #43a047 !important;
+            font-size: 1.1rem;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .btn-danger {
+            background-color: #e53935 !important; /* Bright red */
+            border-color: #e53935 !important;
+            font-size: 1.1rem;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .text-center input[type="button"] {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="garba-header">Update Event</h1>
+
+        @using (Html.BeginForm("UpdateData", "Home", FormMethod.Post))
+        {
+            @Html.HiddenFor(model => model.Id) <!-- Hidden field for the event ID -->
+
+            <div class="form-group">
+                <label for="EventName" class="form-label">Event Name</label>
+                @Html.TextBoxFor(model => model.EventName, new { @class = "form-control", required = "required" })
+            </div>
+
+            <div class="form-group">
+                <label for="Location" class="form-label">Location</label>
+                @Html.TextBoxFor(model => model.Location, new { @class = "form-control", required = "required" })
+            </div>
+
+            <div class="form-group">
+                <label for="EventDate" class="form-label">Event Date</label>
+                @Html.TextBoxFor(model => model.EventDate, new { @class = "form-control", type = "date", required = "required" })
+            </div>
+
+            <div class="form-group">
+                <label for="Description" class="form-label">Description</label>
+                @Html.TextAreaFor(model => model.Description, new { @class = "form-control", required = "required" })
+            </div>
+
+            <div class="form-group">
+                <label for="Price" class="form-label">Price</label>
+                @Html.TextBoxFor(model => model.Price, new { @class = "form-control", type = "number", step = "0.01", required = "required" })
+            </div>
+
+            <div class="text-center">
+                <input type="submit" value="Update Event" class="btn btn-success" />
+                <input type="button" value="Delete Event" class="btn btn-danger" onclick="confirmDelete(@Model.Id)" />
+            </div>
+        }
+
+        <script>
+            function confirmDelete(eventId) {
+                if (confirm("Are you sure you want to delete this event?")) {
+                    window.location.href = '@Url.Action("DeleteEvent", "Home")/' + eventId;
+                }
+            }
+        </script>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

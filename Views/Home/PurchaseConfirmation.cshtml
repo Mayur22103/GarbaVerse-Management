@@ -1,0 +1,77 @@
+﻿@model OnlineEventsManagementSystemMVC.Models.TblEvent
+
+@{
+    ViewBag.Title = "Purchase Confirmation";
+}
+
+<style>
+    body {
+        background-color: #fff3e0; /* Soft warm background color */
+        font-family: 'Arial', sans-serif; /* Clean font */
+    }
+
+    .container {
+        background-color: #ffffff; /* White background for the content */
+        border-radius: 12px; /* Rounded corners */
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Deeper shadow for a floating effect */
+        padding: 40px; /* Increased padding */
+        margin: 50px auto; /* Centered with margin from the top */
+        max-width: 600px; /* Maximum width of the container */
+        border: 2px solid #ff5722; /* Orange border for festive touch */
+    }
+
+    h1 {
+        color: #c2185b; /* Vibrant pink color for the title */
+        font-size: 2.5rem; /* Larger title */
+        margin-bottom: 20px; /* Space below the title */
+        text-align: center; /* Center text */
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    }
+
+    h2 {
+        color: #ff9800; /* Bright orange for the event name */
+        font-size: 2rem; /* Slightly larger font size */
+        margin: 20px 0; /* Margin above and below the event name */
+        text-align: center; /* Center text */
+        font-weight: bold; /* Bold font for emphasis */
+    }
+
+    .confirmation-details {
+        background-color: #ffe0b2; /* Light orange background for confirmation details */
+        border-left: 5px solid #c2185b; /* Pink left border */
+        padding: 15px; /* Padding inside the details box */
+        border-radius: 5px; /* Rounded corners */
+        margin-bottom: 20px; /* Space below details box */
+    }
+
+    .btn-primary {
+        background-color: #ff5722; /* Bright orange button color */
+        border: none; /* Remove border */
+        padding: 10px 20px; /* Increased button padding */
+        font-size: 1.2rem; /* Larger button text */
+        border-radius: 25px; /* Rounded button */
+        transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
+    }
+
+        .btn-primary:hover {
+            background-color: #e64a19; /* Darker orange shade on hover */
+            transform: scale(1.05); /* Slightly increase size on hover */
+        }
+</style>
+
+<div class="container">
+    <h1>Purchase Confirmation</h1>
+
+    <p>You have successfully purchased a ticket for the event:</p>
+    <h2>@Model.EventName</h2>
+
+    <div class="confirmation-details">
+        <p><strong>Location:</strong> @Model.Location</p>
+        <p><strong>Event Date:</strong> @Model.EventDate.ToString("yyyy-MM-dd")</p>
+        <p><strong>Price:</strong> @Model.Price.ToString("C")</p>
+    </div>
+
+    <div class="text-center">
+        <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Back to Event List</a>
+    </div>
+</div>

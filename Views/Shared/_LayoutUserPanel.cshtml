@@ -1,0 +1,318 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewBag.Title</title>
+    <meta charset="UTF-8" />
+    <meta name="keywords" content="Garba Events, Festival" />
+
+    <!-- Custom Theme files -->
+    <link href="../Content/css/bootstrap.css" rel="stylesheet" media="all">
+    <link href="../Content/css/font-awesome.css" rel="stylesheet"> <!-- font-awesome icons -->
+    <link href="../Content/css/style.css" rel="stylesheet" media="all">
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+    <!-- jQuery -->
+    <script src="../Content/js/jquery-2.2.3.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="../Content/js/bootstrap.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Web Fonts -->
+    <link href="//fonts.googleapis.com/css?family=Josefin+Sans:300,400,600,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f7f9fc;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth; /* Enables smooth scrolling */
+        }
+
+        .navbar {
+            background-color: #f8b400;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar a {
+            color: white !important;
+            font-weight: bold;
+        }
+
+        .navbar a:hover {
+            background-color: #e6a700;
+        }
+
+        .swiper-container {
+            width: 100%;
+            height: 100vh;
+            margin-bottom: 20px;
+        }
+
+        .swiper-slide {
+            background-position: center;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 30px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+            position: relative;
+        }
+
+            .swiper-slide h3 {
+                background: rgba(0, 0, 0, 0.5);
+                padding: 20px;
+                border-radius: 10px;
+                text-align: center;
+                color: #ffffff; /* Change text color here */
+            }
+
+        .content {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #f8b400;
+        }
+
+        .row .inner-wrapper {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 20px 0;
+            transition: transform 0.3s;
+        }
+
+        .row .inner-wrapper:hover {
+            transform: translateY(-5px);
+        }
+
+        .icon-wrapper {
+            font-size: 40px;
+            margin-bottom: 10px;
+            color: #f8b400;
+        }
+
+        .footer-top {
+            background-color: #f8b400;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .footer-top h3 {
+            margin-bottom: 20px;
+        }
+
+        html {
+            scroll-behavior: smooth; /* Enables smooth scrolling */
+        }
+
+
+        .footer-top form {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .footer-top input[type="email"] {
+            padding: 10px;
+            border-radius: 5px 0 0 5px;
+            border: none;
+            width: 300px;
+            font-size: 16px;
+        }
+
+        .footer-top input[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            background-color: white;
+            color: #f8b400;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .footer-top input[type="submit"]:hover {
+            background-color: #e6a700;
+        }
+
+       
+    </style>
+</head>
+
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <h1><a class="navbar-brand" href="#">Garba Events</a></h1>
+            </div>
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if (Session["Role"] != null)
+                        {
+                            if (Session["Role"].ToString() == "Admin")
+                            {
+                                <li>@Html.ActionLink("Add Event", "AddEvent", "Home", null, new { @class = "scroll-to-content" })</li>
+                                <li>@Html.ActionLink("Update Event", "UpdateEvent", "Home", null, new { @class = "scroll-to-content" })</li>
+                                <li>@Html.ActionLink("Ticket Sales", "SoldTickets", "Home", null, new { @class = "scroll-to-content" })</li>
+                            }
+                            else if (Session["Role"].ToString() == "User")
+                            {
+                                <li>@Html.ActionLink("Event List", "EventList", "Home", null, new { @class = "scroll-to-content" })</li>
+                                <li>@Html.ActionLink("My Tickets", "MyTickets", "Home", null, new { @class = "scroll-to-content" })</li>
+                            }
+                            <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
+                        }
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Registration", "Registration", "Home", null, new { @class = "scroll-to-content" })</li>
+                        <li>@Html.ActionLink("Login", "Login", "Home", null, new { @class = "scroll-to-content" })</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- //header -->
+    <!-- Slider -->
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" style="background-image: url('../Content/images/garba1.jpg');">
+                <h3>Celebrate the Vibrance of Garba Nights</h3>
+            </div>
+            <div class="swiper-slide" style="background-image: url('../Content/images/garba3.jpg');">
+                <h3>Join Us for Spectacular Dance Events</h3>
+            </div>
+            <div class="swiper-slide" style="background-image: url('../Content/images/garba2.jpg');">
+                <h3>Experience the Joy of Traditional Garba</h3>
+            </div>
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+        <!-- Add Navigation -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+
+    <div class="content">
+        <h2>Welcome to Garba Fest!</h2>
+        <p>Join us in celebrating the vibrant culture of Garba.</p>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="inner-wrapper">
+                        <div class="icon-wrapper">
+                            <i class="fa fa-play" aria-hidden="true"></i>
+                        </div>
+                        <div class="content-wrapper">
+                            <h4>Garba Dance</h4>
+                            <p>Participate in energetic Garba dance sessions.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="inner-wrapper">
+                        <div class="icon-wrapper">
+                            <i class="fa fa-music" aria-hidden="true"></i>
+                        </div>
+                        <div class="content-wrapper">
+                            <h4>Live Music</h4>
+                            <p>Enjoy live music and traditional Garba tunes.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="inner-wrapper">
+                        <div class="icon-wrapper">
+                            <i class="fa fa-ticket" aria-hidden="true"></i>
+                        </div>
+                        <div class="content-wrapper">
+                            <h4>Book Tickets</h4>
+                            <p>Secure your spot and enjoy the festivities.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="content-section">
+        @RenderBody()
+    </div>
+
+
+    <footer>
+        <div class="footer-top">
+            <div class="container">
+                <h3>Stay Updated!</h3>
+                <form action="#" method="post">
+                    <input type="email" placeholder="Enter your email" required>
+                    <input type="submit" value="Subscribe">
+                </form>
+                <p>&copy; 2024 Garba Events. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Swiper
+        const swiper = new Swiper('.swiper-container', {
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            loop: true,
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            // Check if a navigation link with the "scroll-to-content" class was clicked
+            if (window.location.hash === '#content-section') {
+                $('html, body').animate({
+                    scrollTop: $('#content-section').offset().top
+                }, 300, 'swing'); // Adjust duration to 300ms and use 'swing' easing
+            }
+
+            // For each ActionLink, append #content-section to make the scroll happen on page load
+            $('.scroll-to-content').on('click', function (e) {
+                e.preventDefault();
+                const url = $(this).attr('href') + '#content-section';
+                window.location.href = url;
+            });
+        });
+    </script>
+
+</body>
+
+</html>
